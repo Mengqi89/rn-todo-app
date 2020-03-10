@@ -1,7 +1,8 @@
 import React from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View, FlatList } from 'react-native'
 import Header from './components/Header'
 import InputBar from './components/InputBar'
+import TodoItem from './components/TodoItem'
 
 export default class App extends React.Component {
   constructor() {
@@ -35,6 +36,26 @@ export default class App extends React.Component {
     })
   }
 
+  toggleDone(item) {
+    let todos = this.state.todos
+
+    todos = todos.map((todo) => {
+      if (todo.id == item.id) {
+        todo.done = !todo.done
+      }
+      return todo
+    })
+    this.setState({ todos })
+  }
+
+  removeTodo(item) {
+    let todos = this.state.todos
+
+    todos = todos.filter((todo) => todo.id !== item.id)
+
+    this.setState({ todos })
+  }
+
   render() {
     const statusBar = (Platform.OS == 'ios') ? <View style={styles.statusBar}></View> : <View></View>
 
@@ -45,6 +66,20 @@ export default class App extends React.Component {
         <InputBar
           textChange={(todoInput) => this.textChange(todoInput)}
           addNewTodo={() => this.addNewTodo()}
+          todoInput={this.state.todoInput}
+        />
+        <FlatList
+          data={this.state.todos}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => {
+            return (
+              <TodoItem
+                todoItem={item}
+                toggleDone={() => this.toggleDone(item)}
+                removeTodo={() => this.removeTodo(item)}
+              />
+            )
+          }}
         />
         <Text>{this.state.todoInput}</Text>
       </View>
