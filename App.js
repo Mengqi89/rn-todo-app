@@ -1,5 +1,6 @@
 import React from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
+import Header from './components/Header'
 
 export default class App extends React.Component {
   constructor() {
@@ -20,6 +21,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container} >
         {statusBar}
+        <Header title='todoapp' />
       </View>
     )
   }
