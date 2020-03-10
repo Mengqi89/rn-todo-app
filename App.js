@@ -1,9 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 
 export default class App extends React.Component {
   constructor() {
-    super();
+    super()
 
     this.state = {
       todoInput: '',
@@ -13,20 +13,25 @@ export default class App extends React.Component {
       ]
     }
   }
+
   render() {
+    const statusBar = (Platform.OS == 'ios') ? <View style={styles.statusBar}></View> : <View></View>
+
     return (
       <View style={styles.container} >
-        <Text>This is going to be a todo list. </Text>
+        {statusBar}
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#FFF',
   },
-});
+  statusBar: {
+    backgroundColor: '#FFCE00',
+    height: 20
+  }
+})
